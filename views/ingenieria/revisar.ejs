@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>REVISION</title>
+    <link rel="stylesheet" href="css/test.css" />
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+    <script
+      src="https://kit.fontawesome.com/f79a87f18d.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="logo-container">
+        <img src="img/logoRecurso 1.svg" alt="" />
+      </div>
+      <div class="navBotones">
+        <a href="/planeacion">VOLVER</a>
+        <a href="/">SALIR</a>
+      </div>
+    </nav>
+    <div class="table-container">
+      <table id="dataTable" class="display">
+        <thead>
+          <tr>
+            <th>ODT</th>
+            <th>CLIENTE</th>
+            <th>GRUPO</th>
+            <th>CLASIFICACION</th>
+            <th>ESTADO PLANTA</th>
+            <th>MECANIZADO</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach(item => { %>
+          <tr>
+            <form action="/diagRefresh" method="post">
+              <td><%= item.ODT %></td>
+              <td><%= item.CLIENTE %></td>
+              <td><%= item.GRUPO %></td>
+              <td><%= item["CLASIFICACION DEL EQUIPO"] %></td>
+              <td><%= item["ESTADO PLANTA"] %></td>
+              <td>
+                <select name="mecanizado" id="">
+                  <option value="<%= item.MECANIZADO %>" selected hidden>
+                    <%= item.MECANIZADO %>
+                  </option>
+                  <option value="SI">SI</option>
+                  <option value="NO">NO</option>
+                </select>
+              </td>
+              <td>
+                <input type="text" name="ODT" value="<%= item.ODT %>" hidden />
+                <button type="submit">
+                  <i class="fa-solid fa-check"></i>
+                </button>
+              </td>
+            </form>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    const v = document.getElementById("volver");
+    v.addEventListener("click", () => {
+      window.history.back();
+    });
+  </script>
+</html>

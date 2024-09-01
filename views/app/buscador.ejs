@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/test.css" />
+
+    <title>BUSCADOR</title>
+    <script
+      src="https://kit.fontawesome.com/f79a87f18d.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="logo-container">
+        <img src="img/logoRecurso 1.svg" alt="" />
+      </div>
+      <h1>BUSCADOR DE ODT</h1>
+      <div class="navBotones">
+        <a id="volver">VOLVER</a>
+        <a href="/">SALIR</a>
+      </div>
+    </nav>
+
+    <div class="table-container">
+      <table id="dataTable" class="display">
+        <thead>
+          <tr style="background-color: white; border: none">
+            <td style="background-color: white; border: none">
+              <input class="entradas" id="odt" type="number" />
+            </td>
+            <td style="background-color: white; border: none">
+              <select class="entradas" name="c" id="c">
+                <% c.forEach(item =>{ %>
+                <option value="<%= item.CLIENTE %>"><%= item.CLIENTE %></option>
+                <% }) %>
+              </select>
+            </td>
+            <td style="background-color: white; border: none">
+              <select class="entradas" name="g" id="g">
+                <% g.forEach(item =>{ %>
+                <option value="<%= item.grupo %>"><%= item.grupo %></option>
+                <% }) %>
+              </select>
+            </td>
+            <td style="background-color: white; border: none">
+              <select class="entradas" name="ep" id="ep">
+                <% ep.forEach(item =>{ %>
+                <option value="<%= item.estado %>"><%= item.estado %></option>
+                <% }) %>
+              </select>
+            </td>
+            <td style="background-color: white; border: none">
+              <select class="entradas" name="epp" id="epp">
+                <% epp.forEach(item =>{ %>
+                <option value="<%= item.estado %>"><%= item.estado %></option>
+                <% }) %>
+              </select>
+            </td>
+            <td
+              style="background-color: white; border: none; text-align: center"
+            >
+              <button id="buscar" onclick="buscar()">BUSCAR</button>
+            </td>
+            <td
+              style="background-color: white; border: none; text-align: center"
+            >
+              <button id="clear">BORRAR</button>
+            </td>
+            <td style="background-color: white; border: none">
+              <input class="entradas" id="cot" type="number" />
+            </td>
+            <td style="background-color: white; border: none">
+              <input class="entradas" id="oc" type="text" />
+            </td>
+            <td style="background-color: white; border: none">
+              <input class="entradas" id="f" type="text" />
+            </td>
+            <td style="background-color: white; border: none">
+              <input class="entradas" id="r" type="text" />
+            </td>
+            <td
+              id="trP"
+              style="background-color: white; border: none; color: black"
+            ></td>
+          </tr>
+          <tr>
+            <th>ODT</th>
+            <th>CLIENTE</th>
+            <th>CLASIFICACION</th>
+            <th>ESTADO PLANTA</th>
+            <th>PROCESO EN PLANTA</th>
+            <th>FECHA ESTIMADA</th>
+            <th>ENTREGADO A CLIENTE</th>
+            <th>COTIZACION</th>
+            <th>OC</th>
+            <th>FACTURA</th>
+            <th>REMISION</th>
+            <th id="p" style="width: 100px">PRECIO</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <div id="notificador"></div>
+  </body>
+  <script>
+    const info = `<%- info %>`;
+
+    const p = document.getElementById("p");
+    document.addEventListener("DOMContentLoaded", () => {
+      if (info !== "coordinador" && info !== "gerente") {
+        p.remove();
+      }
+    });
+    const v = document.getElementById("volver");
+    v.addEventListener("click", () => {
+      window.history.back();
+    });
+
+    const n = document.getElementById("notificador");
+
+    async function buscar() {
+      const odt = document.getElementById("odt").value.trim();
+      const c = document.getElementById("c").value;
+      const g = document.getElementById("g").value;
+      const ep = document.getElementById("ep").value;
+      const epp = document.getElementById("epp").value;
+      const cot = document.getElementById("cot").value.trim();
+      const r = document.getElementById("r").value.trim();
+      const oc = document.getElementById("oc").value.trim();
+      const f = document.getElementById("f").value.trim();
+
+      n.innerHTML = "";
+
+      const request = await fetch("/buscarOdt", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ODT: odt,
+          CLIENTE: c,
+          GRUPO: g,
+          "N° COTIZACIÓN": cot,
+          "ESTADO PLANTA": ep,
+          "ESTADO PROCESO EN PLANTA": epp,
+          "N° ORDEN DE COMPRA": oc,
+          "N° FACTURA": f,
+          "N° REMISION": r,
+        }),
+      });
+
+      const data = await request.json();
+      const tbody = document.getElementById("tbody");
+      tbody.innerHTML = "";
+      data.forEach((element) => {
+        const tr = document.createElement("tr");
+        const tdOdt = document.createElement("td");
+        tdOdt.textContent = element.ODT;
+        tr.appendChild(tdOdt);
+
+        const tdCliente = document.createElement("td");
+        tdCliente.textContent = element.CLIENTE;
+        tr.appendChild(tdCliente);
+
+        const tdClasificacion = document.createElement("td");
+        tdClasificacion.textContent = element["CLASIFICACION DEL EQUIPO"] || "";
+        tr.appendChild(tdClasificacion);
+
+        const tdEstadoPlanta = document.createElement("td");
+        tdEstadoPlanta.textContent = element["ESTADO PLANTA"] || "";
+        tr.appendChild(tdEstadoPlanta);
+
+        const tdEstadoProceso = document.createElement("td");
+        tdEstadoProceso.textContent = element["ESTADO PROCESO EN PLANTA"] || "";
+        tr.appendChild(tdEstadoProceso);
+
+        const tdFechaEntrega = document.createElement("td");
+        tdFechaEntrega.textContent = element["FECHA ESTIMADA DE ENTREGA"] || "";
+        tr.appendChild(tdFechaEntrega);
+
+        const entregado = document.createElement("td");
+        entregado.textContent = element["FECHA ENTREGA CLIENTE"] || "";
+        tr.appendChild(entregado);
+
+        const cotizacion = document.createElement("td");
+        cotizacion.textContent = element["N° COTIZACIÓN"] || "";
+        tr.appendChild(cotizacion);
+
+        const oc = document.createElement("td");
+        oc.textContent = element["N° ORDEN DE COMPRA"] || "";
+        tr.appendChild(oc);
+
+        const f = document.createElement("td");
+        f.textContent = element["N° FACTURA"] || "";
+        tr.appendChild(f);
+
+        const r = document.createElement("td");
+        r.textContent = element["N° REMISION"] || "";
+        tr.appendChild(r);
+
+        if (info == "coordinador" || info == "gerente") {
+          const p = document.createElement("td");
+          p.textContent = element["PRECIO"] || "";
+          p.className = "precio";
+          tr.appendChild(p);
+        }
+
+        tbody.appendChild(tr);
+      });
+
+      const precios = document.getElementsByClassName("precio");
+      console.log(precios);
+      const trp = document.getElementById("trP");
+      let t = Array.from(precios).reduce((sum, i) => {
+        return sum + parseInt(i.textContent.replace(",00").replace(/[^\d]/g, ""), 10);
+      }, 0);
+      trp.textContent = t.toLocaleString('es-ES', { style: 'currency', currency: 'COP' });;
+
+      if (data.length == 0) {
+        n.innerHTML = `<h1 style="text-align: center">NO SE ENCONTRARON REGISTROS</h1>`;
+      }
+    }
+
+    const clear = document.getElementById("clear");
+    clear.addEventListener("click", () => {
+      document.getElementById("odt").value = "";
+      document.getElementById("c").value = "";
+      document.getElementById("g").value = "";
+      document.getElementById("ep").value = "";
+      document.getElementById("epp").value = "";
+      document.getElementById("cot").value = "";
+      document.getElementById("oc").value = "";
+      document.getElementById("r").value = "";
+      document.getElementById("f").value = "";
+      n.innerHTML = "";
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        buscar();
+      }
+    });
+  </script>
+</html>

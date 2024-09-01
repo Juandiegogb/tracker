@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PENDIENTES APROBACION</title>
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/test.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/f79a87f18d.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      type="text/javascript"
+      charset="utf8"
+      src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"
+    ></script>
+    <!-- <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        const precioInputs = document.querySelectorAll(".precio");
+
+        precioInputs.forEach((precioInput) => {
+          let precio = precioInput.value.replace(/[.,]/g, "");
+          precio = parseInt(precio);
+          const formattedPrecio = new Intl.NumberFormat("es-ES", {
+            style: "currency",
+            currency: "COP",
+          }).format(precio);
+          precioInput.value = formattedPrecio;
+        });
+      });
+    </script> -->
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="logo-container">
+        <img src="img/logoRecurso 1.svg" alt="" />
+      </div>
+      <h1>PENDIENTES APROBACION</h1>
+      <div class="navBotones">
+        <a href="/buscador">BUSCADOR DE ODT</a>
+        <a href="/">SALIR</a>
+      </div>
+    </nav>
+    <div id="loading" class="loading-animation"></div>
+    <div class="table-container">
+      <table id="dataTable" class="display">
+        <thead>
+          <tr>
+            <th>ODT</th>
+            <th>CLIENTE</th>
+            <th>CLASIFICACION</th>
+            <th>ESTADO PLANTA</th>
+            <th>N° COTIZACION</th>
+            <th>N° ORDEN DE COMPRA</th>
+            <th>PRECIO</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach(item => { %>
+          <tr>
+            <form action="/aproRefresh" method="post">
+              <td><%= item.ODT %></td>
+              <td><%= item.CLIENTE %></td>
+              <td><%= item["CLASIFICACION DEL EQUIPO"] %></td>
+              <td>
+                <select name="estadoPlanta" id="estadoPlanta">
+                  <option value="<%= item['ESTADO PLANTA'] %>" selected hidden>
+                    <%= item["ESTADO PLANTA"]%>
+                  </option>
+                  <option value="APROBADO">APROBADO</option>
+                  <option value="NO PROCEDE">NO PROCEDE</option>
+                </select>
+              </td>
+              <td>
+                <input
+                  name="cotizacion"
+                  type="text"
+                  value="<%= item[`N° COTIZACIÓN`] %>"
+                />
+                <p hidden><%= item["N° COTIZACIÓN"] %></p>
+              </td>
+              <td>
+                <input
+                  name="ordenCompra"
+                  type="text"
+                  value="<%= item[`N° ORDEN DE COMPRA`] %>"
+                />
+                <p hidden><%= item[`N° ORDEN DE COMPRA`] %></p>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="precio"
+                  class="precio"
+                  value="<%= item[`PRECIO`] %>"
+                />
+              </td>
+              <td>
+                <input type="text" name="ODT" value="<%= item.ODT %>" hidden />
+                <button type="submit" name="APROBAR">
+                  <i class="fa-solid fa-check"></i>
+                </button>
+              </td>
+            </form>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

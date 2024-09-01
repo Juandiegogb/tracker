@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MECANIZADO</title>
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/test.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/f79a87f18d.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="logo-container">
+        <img src="img/logoRecurso 1.svg" alt="" />
+      </div>
+      <h1>APROBADOS - CARGA DE PLANOS</h1>
+      <div class="navBotones">
+        <a id="volver">VOLVER</a>
+        <a href="/">SALIR</a>
+      </div>
+    </nav>
+    <div id="loading" class="loading-animation"></div>
+    <div class="table-container">
+      <table id="dataTable" class="display">
+        <thead>
+          <tr>
+            <th>ODT</th>
+            <th>CLIENTE</th>
+            <th>CLASIFICACION</th>
+            <th>LISTO PARA MECANIZADO</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach(item => { %>
+          <tr odt="<%= item.ODT %>">
+            <form action="/planos" method="post" enctype="multipart/form-data">
+              <input type="text" name="odt" value="<%=item.ODT%>" hidden />
+              <td><%= item.ODT %></td>
+              <td><%= item.CLIENTE %></td>
+              <td><%= item["CLASIFICACION DEL EQUIPO"] %></td>
+              <td class="lmContainer">
+                <input
+                  readonly
+                  class="lm"
+                  id="<%= item.ODT %>-lm"
+                  type="text"
+                  value="<%= item[`LISTO PARA MECANIZAR`] %>"
+                  name="listoMecanizado"
+                />
+
+                <label class="switch">
+                  <input type="checkbox" class="check" odt="<%= item.ODT %>" />
+                  <span class="slider"></span>
+                </label>
+              </td>
+              <td>
+                <input
+                  type="file"
+                  name="planos"
+                  multiple
+                  required
+                  id="planos"
+                />
+              </td>
+              <td>
+                <button type="submit">
+                  <i class="fa-solid fa-check"></i>
+                </button>
+              </td>
+            </form>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+    <div
+      id="modal-overlay"
+      class="modal-overlay hidden"
+      onclick="cerrar()"
+    ></div>
+    <div class="detalles-container" id="detalles"></div>
+  </body>
+  <script>
+    const filas = document.querySelectorAll("tr");
+    filas.forEach((fila) => {
+      fila.addEventListener("click", async () => {
+        const response = await fetch("/tareas", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ odt: odt }),
+        });
+      });
+    });
+    const checks = document.querySelectorAll(".check");
+    checks.forEach((check) => {
+      check.addEventListener("change", () => {
+        const odt = check.getAttribute("odt");
+        const enunciado = document.getElementById(`${odt}-lm`);
+        if (check.checked) {
+          enunciado.value = "SI";
+        } else {
+          enunciado.value = "NO";
+        }
+      });
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      checks.forEach((check) => {
+        const odt = check.getAttribute("odt");
+        const enunciado = document.getElementById(`${odt}-lm`);
+        if (enunciado.value == "SI") {
+          check.checked = true;
+        }
+      });
+    });
+
+    const v = document.getElementById("volver");
+    v.addEventListener("click", () => {
+      window.history.back();
+    });
+  </script>
+</html>

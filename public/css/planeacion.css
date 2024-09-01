@@ -1,0 +1,115 @@
+/* Estilos generales */
+body {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  font-family: "Arial", sans-serif;
+  font-size: 15px;
+  margin: 0;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  height: 95vh; /* Mínimo alto para ocupar toda la pantalla visible */
+}
+
+nav#navbar {
+  background-color: #1e1e1e;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+h1 {
+  text-align: center;
+}
+
+nav#navbar a {
+  color: #e0e0e0;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav#navbar a:hover {
+  color: #6200ea;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  padding: 10px;
+  height: 80%;
+  max-height: 95vh;
+  justify-content: space-between;
+}
+
+.columna {
+  flex: 1;
+  margin: 0;
+  padding: 10px;
+  border-left: 0.5px solid #ccc;
+  border-top: 0.5px solid #ccc;
+  border-bottom: 0.5px solid #ccc;
+
+  overflow-y: auto;
+  height: 100%;
+  max-width: 200px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.columna::-webkit-scrollbar {
+  display: none; /* WebKit (Chrome, Safari) */
+}
+
+.card {
+  border: 1px solid #444;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #1e1e1e;
+  position: relative; /* Necesario para posicionar el tooltip */
+  overflow: hidden; /* Asegura que el tooltip no se salga de la tarjeta */
+  transition: background-color 0.3s ease;
+}
+
+.card:hover {
+  background-color: #333;
+}
+
+.card .tooltip {
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  white-space: normal; /* Permite el texto largo en múltiples líneas */
+  opacity: 0; /* Ocultar el tooltip inicialmente */
+  visibility: hidden; /* Hacer el tooltip invisible inicialmente */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 10; /* Asegura que el tooltip esté encima de otros elementos */
+  max-width: 300px; /* Ajusta el ancho máximo del tooltip */
+  pointer-events: none; /* Asegura que el tooltip no interfiera con los eventos del mouse */
+  transform: translate(-50%, 0); /* Centra el tooltip horizontalmente */
+}
+
+.card:hover .tooltip {
+  opacity: 1; /* Mostrar el tooltip al hacer hover */
+  visibility: visible; /* Hacer el tooltip visible */
+}
+
+.card:hover .tooltip {
+  top: -50px; /* Ajusta esta distancia para la posición vertical del tooltip */
+  left: 50%; /* Posiciona el tooltip horizontalmente en el centro */
+  transform: translate(-50%, 0); /* Alinea el tooltip con el centro de la tarjeta */
+}
+
+.card .tooltip::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent transparent #333 transparent;
+}

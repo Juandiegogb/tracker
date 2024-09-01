@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nueva Solicitud</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+  </head>
+  <body>
+    <form action="/pushSolicitud" method="post">
+      <h1>SOLICITUDES PRODUCCION</h1>
+      <label for="odt">ODT</label>
+      <input type="text" id="odt" name="odt" required/>
+      <label for="descripcion">Descripcion</label>
+      <textarea name="descripcion" id="descripcion" rows="6"></textarea>
+      <input type="submit" name="`CREAR" value="CREAR" />
+      <button type="button" onclick="history.back()">VOLVER</button>
+    </form>
+  </body>
+</html>

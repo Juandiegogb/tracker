@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Solicitudes produccion</title>
+    <link rel="stylesheet" href="css/test.css" />
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <script
+      src="https://kit.fontawesome.com/f79a87f18d.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav id="navbar">
+      <a href="/">Salir</a>
+    </nav>
+
+    <div id="dataTable_wrapper" class="dataTables_wrapper">
+      <h1>SOLICITUDES PRODUCCION</h1>
+      <table id="dataTable" class="display">
+        <thead>
+          <tr>
+            <th>ODT</th>
+            <th>DESCRIPCION</th>
+            <th>FECHA SOLICITUD</th>
+            <th>FECHA ENTREGA</th>
+            <th>ESTADO</th>
+            <th>SOLICITADO POR</th>
+            <th>FINALIZAR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach(item => { %>
+          <tr>
+            <form action="/solicitudRefresh" method="post">
+              <td><%= item.odt %></td>
+              <td><%= item.descripcion %></td>
+              <td><%= item.fechaSolicitud %></td>
+              <td>
+                <input
+                  type="date"
+                  id="fechaEntrega"
+                  value="<%= item.fechaEntrega %>"
+                  name="fechaEntrega"
+                />
+              </td>
+              <td><%= item.estado %></td>
+              <td><%= item.solicitadoPor %></td>
+              <td>
+                <input type="text" name="id" value="<%= item.id %>" hidden />
+                <input type="submit" value="ACTUALIZAR" name="actualizar" />
+              </td>
+            </form>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script
+    type="text/javascript"
+    charset="utf8"
+    src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"
+  ></script>
+  <script>
+    $(document).ready(function () {
+      $("#dataTable").DataTable({
+        pageLength: 100,
+        order: [[0, "desc"]],
+      });
+
+      $(window).on("load", function () {
+        $("#loading").fadeOut("slow");
+      });
+    });
+  </script>
+</html>

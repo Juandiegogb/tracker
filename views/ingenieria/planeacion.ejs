@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PLANEACION</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/test.css" />
+    <script>
+      function getFirstWord(str) {
+        return str.split(" ")[0];
+      }
+    </script>
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="logo-container">
+        <img src="img/logoRecurso 1.svg" alt="" />
+      </div>
+      <h1 style="text-align: center">PLANEACION HYT</h1>
+      <div class="navBotones">
+        <a href="/buscador">BUSCADOR DE ODT</a>
+        <a href="/mecanizado" id="m">MECANIZADO</a>
+        <a href="/historial">HISTORIAL</a>
+        <a href="/planta">PLANTA</a>
+        <a href="/revision" id="r">REVISION ODT</a>
+        <a href="/">SALIR</a>
+      </div>
+    </nav>
+
+    <main>
+      <% estados.forEach(estado => { %>
+      <div class="column">
+        <h1 style="font-size: 20px"><%= estado || "SIN ESTADO" %></h1>
+        <% data.forEach(dato => { %> <% if (dato['ESTADO PROCESO EN PLANTA'] ===
+        estado) { %>
+        <div class="card" odt="<%= dato.ODT %>">
+          <p style="font-weight: bolder" class="odt"><%= dato.ODT %></p>
+          <p>
+            <script>
+              document.write(getFirstWord("<%= dato.CLIENTE %>"));
+            </script>
+          </p>
+          <p><%= dato["CLASIFICACION DEL EQUIPO"]%></p>
+          <p class="fechaEntrega">
+            <strong><%= dato['FECHA ESTIMADA DE ENTREGA'] || "N/A" %></strong>
+          </p>
+        </div>
+        <% } %> <% }) %>
+      </div>
+      <% }) %>
+      <div
+        id="modal-overlay"
+        class="modal-overlay hidden"
+        onclick="cerrar()"
+      ></div>
+      <div class="detalles-container" id="detalles"></div>
+    </main>
+    <div id="loader" class="loader" hidden></div>
+  </body>
+  <script>
+    const cards = document.querySelectorAll(".card");
+    const detalles = document.getElementById("detalles");
+    const modalOverlay = document.getElementById("modal-overlay");
+    const loader = document.getElementById("loader");
+    const info = `<%- info %>`;
+    const r = document.getElementById("r");
+    const m = document.getElementById("m");
+
+    if (info != "coordinador") {
+      console.log(info);
+      r.remove();
+      m.remove();
+    }
+
+    async function cerrar() {
+      const f = document.getElementById("fechaEntrega").value;
+      const odt = document.getElementById("odt").textContent.trim();
+      detalles.style.display = "none";
+      modalOverlay.style.display = "none";
+      loader.style.display = "none";
+      const fA = document.getElementById("fA").value;
+
+      if (info == "coordinador" && fA != f) {
+        const actualizar = await fetch("/planeacionFecha", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ odt: odt, fecha: f }),
+        });
+        window.location.reload();
+      }
+    }
+
+    cards.forEach((card) => {
+      card.addEventListener("click", async () => {
+        const odt = card.getAttribute("odt");
+        loader.style.display = "block";
+        detalles.classList.remove("visible");
+        modalOverlay.style.display = "flex";
+
+        try {
+          const response = await fetch("/buscarOdt", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ odt: odt }),
+          });
+          let data = await response.json();
+          data = data[0];
+
+          detalles.innerHTML = `<div class="detalleMain">
+          <p id="odt">${data.ODT}</p>
+          <p>${data.CLIENTE}</p>
+          <p>${data["CLASIFICACION DEL EQUIPO"]}</p>
+        </div>
+        <div class="info-container">
+        <div class="listaControl" id="listaControl"></div>
+        <div class="dataContainer">
+           <input class="calendario" type="date" id="fechaEntrega" name="fechaEntrega" value="${data["FECHA ESTIMADA DE ENTREGA"]}">
+           <input type="text" id="fA" hidden name="fechaEntrega" value="${data["FECHA ESTIMADA DE ENTREGA"]}">
+          <p><strong>Estado Planta:</strong> ${data["ESTADO PLANTA"]}</p>
+          <p><strong>Fecha de Aprobación:</strong> ${data["FECHA DE APROBACIÓN"]}</p>
+          <p><strong>Fecha Entrega Mecanizado:</strong> ${data["FECHA ENTREGA MECANIZADO"]}</p>
+          <p><strong>N° Cotización:</strong> ${data["N° COTIZACIÓN"]}</p>
+          <p><strong>N° Orden de Compra:</strong> ${data["N° ORDEN DE COMPRA"]}</p>
+          <p><strong>N° Remisión:</strong> ${data["N° REMISION"]}</p>
+          <p><strong>N° Factura:</strong> ${data["N° FACTURA"]}</p>
+          <p><strong>Material:</strong> ${data.MATERIAL}</p>
+          <p><strong>Kit de Sellos:</strong> ${data["KIT DE SELLOS"]}</p>
+          <p><strong>Otros:</strong> ${data.OTROS}</p>
+          <p><strong>Observaciones Insumos:</strong> ${data["OBSERVACIONES INSUMOS"]}</p>
+          <strong>Fecha Estimada de Mecanizado:</strong> ${data["FECHA ESTIMADA DE MECANIZADO"]}
+          </p>
+        </div>
+        </div>`;
+
+          const listaControl = document.getElementById("listaControl");
+          const tareasResponse = await fetch("/tareas", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ odt: odt }),
+          });
+          const tareas = await tareasResponse.json();
+          tareas.forEach((tarea) => {
+            const div = document.createElement("div");
+            div.className = "tarea";
+            listaControl.appendChild(div);
+            const p = document.createElement("p");
+            const check = document.createElement("input");
+            check.type = "checkbox";
+            check.value = "SI";
+            p.textContent = tarea.descripcion;
+            div.appendChild(p);
+            div.appendChild(check);
+          });
+          loader.style.display = "none";
+          detalles.style.display = "flex";
+        } catch (error) {
+          console.error("Error al cargar los datos:", error);
+          loader.style.display = "none";
+        }
+      });
+    });
+  </script>
+</html>

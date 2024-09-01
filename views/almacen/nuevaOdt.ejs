@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NUEVA ODT</title>
+    <link rel="stylesheet" href="css/test.css" />
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="logo-container">
+        <img src="img/logoRecurso 1.svg" alt="" />
+      </div>
+      <div class="navBotones">
+        <a href="/almacen">VOLVER</a>
+        <a href="/">SALIR</a>
+      </div>
+    </nav>
+    <main>
+      <form
+        action="/crearOdt"
+        method="post"
+        enctype="multipart/form-data"
+        class="nuevaOdt"
+      >
+        <h1>SOLICITAR ODT</h1>
+        <label for="cliente">CLIENTE</label>
+        <select class="nOE" required name="cliente" id="cliente">
+          <% clientes.forEach(item => { %>
+          <option value="<%= item.CLIENTE %>"><%= item.CLIENTE %></option>
+          <% }); %>
+          <option value="" selected hidden></option>
+        </select>
+        <label for="grupo">GRUPO</label>
+        <select class="nOE" required name="grupo" id="grupo">
+          <% grupos.forEach(item => { %>
+          <option value="<%= item.grupo %>"><%= item.grupo %></option>
+          <% }); %>
+          <option value="" selected hidden></option>
+        </select>
+        <label for="clasificacion">CLASIFICACION</label>
+        <select
+          class="nOE"
+          required
+          name="clasificacion"
+          id="clasificacion"
+        ></select>
+
+        <label for="fotografias">FOTOGRAFIAS</label>
+        <input required type="file" name="fotografias" id="fotografias" />
+        <label for="detalle">DETALLE</label>
+        <textarea
+          class="nOE"
+          required
+          name="detalle"
+          id="detalle"
+          cols="30"
+          rows="5"
+        ></textarea>
+        <button type="submit" style="font-weight: bolder">SOLICITAR ODT</button>
+      </form>
+    </main>
+  </body>
+  <script>
+    const g = document.getElementById("grupo");
+    const c = document.getElementById("clasificacion");
+    let r = `<%- JSON.stringify(resultado) %>`;
+    r = JSON.parse(r);
+
+    g.addEventListener("change", () => {
+      let s = "";
+      const l = r[g.value];
+      s += `<option selected hidden "></option>`;
+      l.forEach((i) => {
+        s += `<option value="${i}">${i}</option>`;
+      });
+      c.innerHTML = s;
+    });
+
+    const v = document.getElementById("volver");
+    v.addEventListener("click", () => {
+      window.history.back();
+    });
+  </script>
+</html>

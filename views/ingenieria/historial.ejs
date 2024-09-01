@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HISTORIAL</title>
+    <link rel="stylesheet" href="css/test.css" />
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"
+    />
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="logo-container">
+        <img src="img/logoRecurso 1.svg" alt="" />
+      </div>
+      <h1 style="text-align: center">PLANEACION HYT</h1>
+      <div class="navBotones">
+        <a id="volver">VOLVER</a>
+        <a href="/">SALIR</a>
+      </div>
+    </nav>
+    <div class="table-container">
+      <table id="dataTable" class="display">
+        <thead>
+          <tr>
+            <td>ODT</td>
+            <td>USER</td>
+            <td>FECHA</td>
+            <td>DETALLE</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach(item => { %>
+          <tr>
+            <td><%= item.odt %></td>
+            <td><%= item.user %></td>
+            <td><%= item.fecha %></td>
+            <td><%= item.detalle %></td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+
+  <script>
+    const v = document.getElementById("volver");
+    v.addEventListener("click", () => {
+      window.history.back();
+    });
+
+    // Inicializar DataTables
+    $(document).ready(function () {
+      $("#dataTable").DataTable({
+        // Opciones adicionales de DataTables si las necesitas
+        paging: true,
+        searching: true,
+        ordering: true,
+        language: {
+          url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/Spanish.json",
+        },
+      });
+    });
+  </script>
+</html>

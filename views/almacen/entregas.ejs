@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/test.css" />
+    <script
+      src="https://kit.fontawesome.com/f79a87f18d.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>ENTREGAS</title>
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="logo-container">
+        <img src="img/logoRecurso 1.svg" alt="" />
+      </div>
+      <h1>PENDIENTE ENTREGA CLIENTE</h1>
+      <div class="navBotones">
+        <a id="volver">VOLVER</a>
+        <a href="/">SALIR</a>
+      </div>
+    </nav>
+
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th>ODT</th>
+            <th>CLIENTE</th>
+            <th>CLASIFICACION</th>
+            <th>ENTREGADO CLIENTE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% d.forEach(item => {%>
+          <tr>
+            <form action="/entregadoCliente" method="post">
+              <input type="text" name="odt" value="<%=item.ODT%>" hidden />
+              <td><%= item.ODT %></td>
+              <td><%= item.CLIENTE %></td>
+              <td><%= item["CLASIFICACION DEL EQUIPO"] %></td>
+              <td>
+                <button type="submit">
+                  <i class="fa-solid fa-check"></i>
+                </button>
+              </td>
+            </form>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </main>
+  </body>
+  <script>
+    const v = document.getElementById("volver");
+    v.addEventListener("click", () => {
+      window.history.back();
+    });
+  </script>
+</html>

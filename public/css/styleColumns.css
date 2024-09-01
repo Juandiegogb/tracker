@@ -1,0 +1,145 @@
+/* Estilos generales */
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  size: 15px;
+}
+
+nav#navbar {
+  background-color: #1e1e1e;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+nav#navbar a {
+  color: #e0e0e0;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav#navbar a:hover {
+  color: #6200ea;
+}
+
+main {
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  size: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+button {
+  background-color: transparent;
+  border: 0;
+}
+
+select {
+  margin-bottom: 0px;
+}
+
+nav#navbar {
+  background-color: #1e1e1e;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav#navbar a {
+  color: #e0e0e0;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav#navbar a:hover {
+  color: #6200ea;
+}
+
+/* Estilos de columnas y tarjetas */
+.column {
+  width: 20%;
+  padding: 10px;
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 10px;
+  min-height: 400px;
+}
+
+.column h2 {
+  color: #e0e0e0;
+  text-align: center;
+}
+
+.card {
+  background-color: #2b2b2b;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.card p {
+  margin: 5px 0;
+}
+
+i {
+  color: #6200ea;
+  font-size: 30px;
+  margin-left: 5px;
+}
+
+i:hover {
+  color: white;
+  cursor: pointer;
+}
+
+button {
+  background-color: transparent;
+  border: 0;
+}
+
+form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+input[type="submit"] {
+  background-color: #6200ea;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #3700b3;
+}
+
+.bold {
+  font-weight: bolder;
+}
+
+h1 {
+  text-align: center;
+}
+
+.chart-container {
+  height: 600px;
+
+  padding: 10px;
+}
+
+canvas{
+  width: 400px;
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <script
+      src="https://kit.fontawesome.com/f79a87f18d.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="logo-container">
+        <img src="img/logoRecurso 1.svg" alt="" />
+      </div>
+      <a href="/">SALIR</a>
+    </nav>
+    <h1>DASHBOARD HYT</h1>
+    <div class="main">
+      <div class="chart">
+        <canvas id="myChart"></canvas>
+      </div>
+      <div class="numbers-container">
+        <div class="card">
+          <p>TOTAL ENTREGADOS</p>
+          <div class="number" data-final-value="<%= entregados%>">0</div>
+        </div>
+        <div class="card">
+          <p>ODTs</p>
+          <div class="number" data-final-value="<%= total%>">0</div>
+        </div>
+        <div class="card">
+          <p>ENTREGAS ESTE MES</p>
+          <div class="number" data-final-value="<%= counter%>">0</div>
+        </div>
+        <div class="card">
+          <p>HORAS ENSAMBLE</p>
+          <div class="number" data-final-value="80">0</div>
+        </div>
+        <button><a href="/planeacion">PLANEACION</a></button>
+      </div>
+    </div>
+
+    <script>
+      const labels = [];
+      const values = [];
+      var datos = JSON.parse(`<%- JSON.stringify(estadosPlanta) %>`);
+      for (let estado in datos) {
+        if (estado != "ENTREGADO CLIENTE" && datos[estado] > 0) {
+          labels.push(estado);
+          values.push(datos[estado]);
+        }
+      }
+
+      const data = {
+        labels: labels,
+        datasets: [
+          {
+            label: "ESTADO PLANTA",
+            data: values,
+            backgroundColor: "rgba(54, 162, 235, 0.2)",
+            borderColor: "rgba(54, 162, 235, 1)",
+            borderWidth: 1,
+            tension: 0.4,
+            fill: {
+              target: "origin",
+              above: "rgba(54, 162, 235, 0.2)", // Area color above line
+              below: "rgba(54, 162, 235, 0.2)", // Area color below line
+            },
+          },
+        ],
+      };
+
+      const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+        plugins: {
+          tooltip: {
+            mode: "index",
+            intersect: false,
+          },
+        },
+      };
+
+      const ctx = document.getElementById("myChart").getContext("2d");
+      const myChart = new Chart(ctx, {
+        type: "bar", // Tipo de gráfico (ejemplo de gráfico de barras)
+        data: data,
+        options: options,
+      });
+    </script>
+    <script>
+      const duration = 800;
+      const startValue = 0;
+
+      const numberElements = document.querySelectorAll(".number");
+
+      function animateNumbers() {
+        numberElements.forEach((numberElement) => {
+          const finalValue = parseInt(
+            numberElement.getAttribute("data-final-value")
+          );
+          animateNumber(startValue, finalValue, duration, numberElement);
+        });
+      }
+
+      function animateNumber(start, end, duration, element) {
+        let startTime = null;
+
+        function step(timestamp) {
+          if (!startTime) startTime = timestamp;
+          const progress = timestamp - startTime;
+          const percentage = Math.min(progress / duration, 1);
+          const value = Math.floor(start + percentage * (end - start));
+          element.textContent = value;
+          if (percentage < 1) {
+            window.requestAnimationFrame(step);
+          }
+        }
+        window.requestAnimationFrame(step);
+      }
+      animateNumbers();
+    </script>
+  </body>
+</html>

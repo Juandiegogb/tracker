@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PLANTA</title>
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/test.css" />
+    <script
+      src="https://kit.fontawesome.com/f79a87f18d.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function getFirstWord(str) {
+        return str.split(" ")[0];
+      }
+    </script>
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="logo-container">
+        <img src="img/logoRecurso 1.svg" alt="" />
+      </div>
+      <h1>SUPERVISOR DE PLANTA</h1>
+      <div class="navBotones">
+        <a id="volver">VOLVER</a>
+        <a href="/buscador">BUSCADOR DE ODT</a>
+        <a href="/">SALIR</a>
+      </div>
+    </nav>
+    <main>
+      <div class="column" id="diagnostico">
+        <h1>DIAGNOSTICOS</h1>
+        <% diagnosticos.forEach(item => { %>
+        <div class="card" id="<%= item.ODT %>">
+          <form action="/diagnosticoTerminado" method="post">
+            <div class="infoContent">
+              <p class="odt"><%= item.ODT %></p>
+              <p>
+                <script>
+                  document.write(getFirstWord("<%= item.CLIENTE %>"));
+                </script>
+              </p>
+              <p><%= item["CLASIFICACION DEL EQUIPO"]%></p>
+              <p><%= item["FECHA ESTIMADA DE ENTREGA"]%></p>
+              <input type="text" value="<%= item.ODT %>" name="odt" hidden />
+            </div>
+            <div class="checkContent">
+              <button type="submit">
+                <i class="fa-solid fa-check"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+        <% }); %>
+      </div>
+      <div class="column" id="ensamble">
+        <h1>ENSAMBLE</h1>
+        <% ensambles.forEach(item => { %>
+        <div class="card" id="<%= item.ODT %>">
+          <form action="/ensambleTerminado" method="post">
+            <div class="infoContent">
+              <p class="odt"><%= item.ODT %></p>
+              <p>
+                <script>
+                  document.write(getFirstWord("<%= item.CLIENTE %>"));
+                </script>
+              </p>
+              <p><%= item["CLASIFICACION DEL EQUIPO"]%></p>
+              <p><%= item["FECHA ESTIMADA DE ENTREGA"]%></p>
+              <input type="text" value="<%= item.ODT %>" name="odt" hidden />
+            </div>
+            <div class="checkContent">
+              <button type="submit">
+                <i class="fa-solid fa-check"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+        <% }); %>
+      </div>
+      <div class="column" id="pruebas">
+        <h1>PRUEBAS</h1>
+        <% pruebas.forEach(item => { %>
+        <div class="card" id="<%= item.ODT %>">
+          <form action="/pruebasTerminado" method="post">
+            <div class="infoContent">
+              <p class="odt"><%= item.ODT %></p>
+              <p>
+                <script>
+                  document.write(getFirstWord("<%= item.CLIENTE %>"));
+                </script>
+              </p>
+              <p><%= item["CLASIFICACION DEL EQUIPO"]%></p>
+              <p><%= item["FECHA ESTIMADA DE ENTREGA"]%></p>
+              <input type="text" value="<%= item.ODT %>" name="odt" hidden />
+            </div>
+            <div class="checkContent">
+              <button type="submit">
+                <i class="fa-solid fa-check"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+        <% }); %>
+      </div>
+      <div class="column" id="terminado">
+        <h1>KIZEO</h1>
+        <% pendientesFormato.forEach(item => { %>
+        <div class="card" id="<%= item.ODT %>">
+          <form action="/terminado" method="post">
+            <div class="infoContent">
+              <p class="bold"><%= item.ODT %></p>
+              <p>
+                <script>
+                  document.write(getFirstWord("<%= item.CLIENTE %>"));
+                </script>
+              </p>
+              <p><%= item["CLASIFICACION DEL EQUIPO"]%></p>
+              <p><%= item["FECHA ESTIMADA DE ENTREGA"]%></p>
+              <p class="bold"><%= item.FORMATO %></p>
+              <input type="text" value="<%= item.ODT %>" name="odt" hidden />
+            </div>
+          </form>
+        </div>
+        <% }); %> <% listoFormato.forEach(item => { %>
+        <div class="card" id="<%= item.ODT %>">
+          <form action="/terminado" method="post">
+            <div class="infoContent">
+              <p class="bold"><%= item.ODT %></p>
+              <p>
+                <script>
+                  document.write(getFirstWord("<%= item.CLIENTE %>"));
+                </script>
+              </p>
+              <p><%= item["CLASIFICACION DEL EQUIPO"]%></p>
+              <p><%= item["FECHA ESTIMADA DE ENTREGA"]%></p>
+              <p class="bold"><%= item.FORMATO %></p>
+              <input type="text" value="<%= item.ODT %>" name="odt" hidden />
+            </div>
+            <div class="checkContent">
+              <button type="submit">
+                <i class="fa-solid fa-check"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+        <% }); %>
+      </div>
+    </main>
+  </body>
+  <script>
+    let info = `<%- JSON.stringify(info) %>`;
+    const v = document.getElementById("volver");
+    info = info.replace(`"`, "").replace(`"`, "");
+    if (v) {
+      if (info === "supervisor") {
+        v.remove();
+      } else {
+        const i = document.querySelectorAll("button");
+        i.forEach((item) => {
+          item.remove();
+        });
+      }
+    }
+    v.addEventListener("click", () => {
+      window.history.back();
+    });
+  </script>
+</html>

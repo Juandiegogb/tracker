@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MECANIZADO</title>
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/test.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/f79a87f18d.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="logo-container">
+        <img src="img/logoRecurso 1.svg" alt="" />
+      </div>
+      <a href="/">SALIR</a>
+    </nav>
+    <main>
+      <% updatedData.forEach(record => { %>
+      <div class="card" odt="<%= record.ODT %>">
+        <div class="card-header">
+          <h2>ODT: <%= record.ODT %></h2>
+        </div>
+        <div class="card-body">
+          <p><%= record.CLIENTE %></p>
+          <p><%= record["CLASIFICACION DEL EQUIPO"] %></p>
+        </div>
+      </div>
+      <% }); %>
+      <div
+        id="modal-overlay"
+        class="modal-overlay hidden"
+        onclick="cerrar()"
+      ></div>
+      <div class="pdfContainer" id="detalles">
+        <h1>fjsdafjasldkfjasld;kfjaslk</h1>
+        <div class="pdfList" id="pdfList"></div>
+      </div>
+      <!-- <div id="loader" class="loader" hidden></div> -->
+    </main>
+  </body>
+  <script>
+    function cerrar() {
+      detalles.style.display = "none";
+      modalOverlay.style.display = "none";
+      window.location.reload();
+    }
+    const cards = document.querySelectorAll(".card");
+    const detalles = document.getElementById("detalles");
+    const modalOverlay = document.getElementById("modal-overlay");
+    let d = `<%- JSON.stringify(updatedData) %>`.replace(/\\/g, "/");
+    const dataArray = JSON.parse(d);
+    const data = dataArray.reduce((acc, item) => {
+      acc[item.ODT] = {
+        cliente: item.CLIENTE,
+        files: item.files,
+      };
+      return acc;
+    }, {});
+
+    cards.forEach((card) => {
+      card.addEventListener("click", () => {
+        const odt = card.getAttribute("odt");
+        detalles.style.display = "flex";
+        modalOverlay.style.display = "flex";
+        const pdfList = document.getElementById("pdfList");
+        const files = data[odt].files;
+        const l = document.createElement("ul");
+        files.forEach((file) => {
+          const a = document.createElement("a");
+          const i = document.createElement("iframe");
+          const div = document.createElement("div");
+
+          div.setAttribute("class", "pdfItem");
+          a.setAttribute("href", file);
+          a.setAttribute("target", "_blank");
+          a.innerHTML = file;
+          i.setAttribute("src", file);
+
+          div.appendChild(a);
+          div.appendChild(i);
+          pdfList.appendChild(div);
+        });
+      });
+    });
+  </script>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>INGENIERIA</title>
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/test.css" />
+    <script
+      src="https://kit.fontawesome.com/f79a87f18d.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="logo-container">
+        <img src="img/logoRecurso 1.svg" alt="" />
+      </div>
+      <div class="navBotones">
+        <a href="/buscador">BUSCADOR DE ODT</a>
+        <a href="/">SALIR</a>
+      </div>
+    </nav>
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th>ODT</th>
+            <th>CLIENTE</th>
+            <th>CLASIFICACION</th>
+            <th>FORMATO REPARACION</th>
+            <th>FORMATO TERMINADO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% d.forEach(item => { %>
+          <tr>
+            <form action="/formato" method="post">
+              <input type="text" name="odt" value="<%=item.ODT%>" hidden />
+              <td><%= item.ODT %></td>
+              <td><%= item.CLIENTE %></td>
+              <td><%= item["CLASIFICACION DEL EQUIPO"] %></td>
+              <td><%= item["ESTADO PROCESO EN PLANTA"] %></td>
+              <td>
+                <button type="submit">
+                  <i class="fa-solid fa-check"></i>
+                </button>
+              </td>
+            </form>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </main>
+  </body>
+</html>

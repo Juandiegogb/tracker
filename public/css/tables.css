@@ -1,0 +1,282 @@
+body {
+<<<<<<< HEAD:public/css/test.css
+  font-family: Arial, sans-serif;
+  background-color: white;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  max-height: 90vh;
+}
+
+nav {
+=======
+  background-color: #0F1428; /* Color de fondo principal */
+  color: #FFFFFF; /* Texto en color blanco */
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  font-size: 15px; /* Corregido de 'size' a 'font-size' */
+}
+
+nav#navbar {
+  background-color: #0F1428; /* Fondo de la barra de navegación */
+  padding: 10px;
+>>>>>>> de4726bcc5e5f0d760bdef6bdf476b92d15dd2af:public/css/tables.css
+  display: flex;
+  flex-direction: row;
+  padding: 40px 60px 0px;
+  text-align: center;
+  justify-content: space-between;
+  align-items: center;
+}
+
+<<<<<<< HEAD:public/css/test.css
+nav a {
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
+=======
+nav#navbar a {
+  color: #FFFFFF; /* Texto en color blanco */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav#navbar a:hover {
+  color: #dd2421; /* Color del texto al pasar el cursor */
+}
+
+/* Estilos DataTable */
+#dataTable_wrapper {
+  margin: 20px;
+  background-color: #0F1428; /* Fondo del contenedor DataTable */
+>>>>>>> de4726bcc5e5f0d760bdef6bdf476b92d15dd2af:public/css/tables.css
+  border-radius: 10px;
+  padding: 10px;
+  background-color: red;
+  margin-right: 25px;
+}
+
+.logo-container {
+  height: 80px;
+}
+
+.logo-container img {
+  margin-left: 50px;
+  height: 100%;
+}
+
+.table-container {
+  width: 100%;
+<<<<<<< HEAD:public/css/test.css
+  overflow: auto;
+  max-height: 800px; /* Ajusta la altura según tus necesidades */
+  margin: 20px auto;
+  padding: 0 10px;
+}
+
+.table-container::-webkit-scrollbar {
+  width: 0px; /* Oculta la barra de desplazamiento vertical */
+  height: 0px; /* Oculta la barra de desplazamiento horizontal */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+  background-color: #dd2421; /* Color rojo */
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+=======
+  color: #FFFFFF; /* Texto en color blanco */
+  background-color: #0F1428; /* Fondo de la tabla */
+  border-collapse: collapse;
+}
+
+table#dataTable thead th {
+  background-color: #dd2421; /* Fondo de los encabezados de la tabla */
+>>>>>>> de4726bcc5e5f0d760bdef6bdf476b92d15dd2af:public/css/tables.css
+  padding: 10px;
+  text-align: left;
+}
+
+<<<<<<< HEAD:public/css/test.css
+th {
+  background-color: #dd2421; /* Color rojo */
+=======
+table#dataTable tbody tr {
+  border-bottom: 1px solid #444;
+}
+
+table#dataTable tbody tr:nth-child(even) {
+  background-color: #0F1428; /* Fondo de filas pares */
+}
+
+table#dataTable tbody tr:hover {
+  background-color: #0F1428; /* Fondo al pasar el cursor */
+}
+
+table#dataTable tbody td {
+  padding: 10px;
+}
+
+input[type="submit"] {
+  background-color: #dd2421; /* Fondo del botón */
+  border: none;
+  border-radius: 5px;
+>>>>>>> de4726bcc5e5f0d760bdef6bdf476b92d15dd2af:public/css/tables.css
+  color: white;
+}
+
+<<<<<<< HEAD:public/css/test.css
+tbody tr:nth-child(even) {
+  background-color: #f4f4f4; /* Gris claro */
+}
+
+tbody tr:hover {
+  background-color: #eaeaea; /* Gris más oscuro al pasar el ratón */
+}
+
+button {
+  background-color: #dd2421; /* Color rojo */
+=======
+input[type="submit"]:hover {
+  background-color: #b71b1a; /* Color del botón al pasar el cursor */
+}
+
+select,
+textarea,
+input {
+  background-color: #0F1428; /* Fondo de los campos de entrada */
+  border: 1px solid #333;
+  border-radius: 5px;
+  padding: 10px;
+  color: white; /* Texto en color #0F1428 */
+  margin-bottom: 0px;
+  font-size: 14px;
+}
+
+input:focus {
+  border-color: #dd2421; /* Color del borde al enfocar */
+  outline: none;
+}
+
+button {
+  background-color: #dd2421; /* Fondo del botón */
+  border: none;
+  border-radius: 5px;
+>>>>>>> de4726bcc5e5f0d760bdef6bdf476b92d15dd2af:public/css/tables.css
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+<<<<<<< HEAD:public/css/test.css
+  background-color: #c81d1d; /* Rojo más oscuro al pasar el ratón */
+}
+
+input[type="text"] {
+  border: 1px solid #ddd;
+  padding: 5px;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+=======
+  background-color: #b71b1a; /* Color del botón al pasar el cursor */
+}
+
+i {
+  color: white; /* Color del icono */
+  font-size: 30px;
+  margin-left: 5px;
+}
+
+i:hover {
+  color: white;
+  cursor: pointer;
+}
+
+button {
+  border: 0;
+>>>>>>> de4726bcc5e5f0d760bdef6bdf476b92d15dd2af:public/css/tables.css
+}
+
+select {
+  border: 1px solid #ddd;
+  padding: 5px;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+<<<<<<< HEAD:public/css/test.css
+
+input[type="submit"] {
+  background-color: red;
+  color: white;
+  border: none;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  width: 95%;
+  justify-content: space-between;
+  padding: 10px 50px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  max-height: 75vh;
+  width: 22%;
+  overflow-y: auto;
+}
+
+.column h1 {
+  margin-top: 0%;
+  position: sticky;
+  background-color: white;
+  top: 0;
+  z-index: 1;
+  text-align: center;
+}
+
+.card {
+  border: solid 1px red;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 5px;
+  width: 70%;
+  margin: 5px auto;
+}
+
+.card form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.column p{
+  margin: 0%;
+}
+
+.column button{
+  height: 100%;
+}
+=======
+>>>>>>> de4726bcc5e5f0d760bdef6bdf476b92d15dd2af:public/css/tables.css

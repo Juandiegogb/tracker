@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ALMACEN</title>
+    <link rel="stylesheet" href="css/test.css" />
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+    <script
+      src="https://kit.fontawesome.com/f79a87f18d.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="logo-container">
+        <img src="img/logoRecurso 1.svg" alt="" />
+      </div>
+      <div class="navBotones">
+        <a href="/solicitarOdt">CREAR ODT</a>
+        <a href="/entregas">ENTREGAS CLIENTE</a>
+        <a href="/">SALIR</a>
+      </div>
+    </nav>
+
+    <div class="table-container">
+      <table id="dataTable" class="display">
+        <thead>
+          <tr>
+            <th>ODT</th>
+            <th>CLIENTE</th>
+            <th>CLASIFICACION</th>
+            <th>FECHA DE ENTREGA</th>
+            <th>MATERIAL</th>
+            <th>KIT DE SELLOS</th>
+            <th>OTROS</th>
+            <th>OBSERVACIONES</th>
+            <th>BOTON</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach(item => { %>
+          <tr>
+            <form action="/almacenRefresh" method="post">
+              <td><%= item.ODT %></td>
+              <td><%= item.CLIENTE %></td>
+              <td><%= item["CLASIFICACION DEL EQUIPO"] %></td>
+              <td><%= item["FECHA ESTIMADA DE ENTREGA"] %></td>
+              <td>
+                <select name="material" id="">
+                  <option value="<%= item.MATERIAL %>" selected hidden>
+                    <%= item.MATERIAL %>
+                  </option>
+                  <option value="LISTO">LISTO</option>
+                  <option value="PENDIENTE">PENDIENTE</option>
+                  <option value="N/A">N/A</option>
+                </select>
+              </td>
+              <td>
+                <select name="sellos" id="">
+                  <option value="<%= item[`KIT DE SELLOS`] %>" selected hidden>
+                    <%= item["KIT DE SELLOS"] %>
+                  </option>
+                  <option value="LISTO">LISTO</option>
+                  <option value="PENDIENTE">PENDIENTE</option>
+                  <option value="N/A">N/A</option>
+                </select>
+              </td>
+              <td>
+                <select name="otros" id="">
+                  <option value="<%= item.OTROS %>" selected hidden>
+                    <%= item.OTROS %>
+                  </option>
+                  <option value="LISTO">LISTO</option>
+                  <option value="PENDIENTE">PENDIENTE</option>
+                  <option value="N/A">N/A</option>
+                </select>
+              </td>
+              <td>
+                <textarea name="observaciones" id="" cols="20" rows="2">
+<%= item[`OBSERVACIONES INSUMOS`] %></textarea
+                >
+              </td>
+              <td>
+                <input type="text" name="odt" value="<%= item.ODT %>" hidden />
+                <button type="submit">
+                  <i class="fa-solid fa-check"></i>
+                </button>
+              </td>
+            </form>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</html>
